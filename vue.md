@@ -55,3 +55,45 @@ watch: {
 
 而`immediate:true`代表如果在 wacth 里声明了 firstName 之后，就会立即先去执行里面的handler方法，如果为 `false`就跟我们以前的效果一样，不会在绑定的时候就执行。
 
+### vue中对于页面刷新时事件的监听
+
+#### **使用原生的属性**`onbeforeunload`
+
+```js
+window.onbeforeunload = function (e) {
+ e = e || window.event;
+  
+ // 兼容IE8和Firefox 4之前的版本
+ if (e) {
+ e.returnValue = '关闭提示';
+ }
+  
+ // Chrome, Safari, Firefox 4+, Opera 12+ , IE 9+
+ return '关闭提示';
+};
+```
+
+#### 在methods中定义事件
+
+```js
+methods: {
+ beforeunloadHandler (e) {
+ // ...
+ }
+}
+```
+
+#### 在 `mounted`,`created` 钩子中注册事件
+
+```js
+window.addEventListener('beforeunload', e => this.beforeunloadHandler(e))
+```
+
+#### 在页面销毁`destroyed `时清除监听
+
+```js
+destroyed() {
+ window.removeEventListener('beforeunload', e => this.beforeunloadHandler(e))
+}
+```
+

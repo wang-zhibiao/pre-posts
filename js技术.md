@@ -174,3 +174,85 @@ function getRandomColor () {
   return '#' + rgb.join('')
 }
 ```
+
+#### 数组的方法可以进行二次筛选
+
+```js
+var hufflepuff = wizards.filter(function (wizard) {
+  return wizard.house === 'Hufflepuff';
+}).map(function (wizard) {
+  return wizard.name;
+});
+```
+
+在filter后进行map方法，由于filter返回的是一个数组 所有再次map的是一个数组相当于：
+
+```js
+wizards.filter(function (wizard) {
+  return wizard.house === 'Hufflepuff';
+})  //=>返回一个数组
+let arr = wizards.filter(function (wizard) {return wizard.house === 'Hufflepuff';}) 
+arr.map(function (wizard) {return wizard.name;});
+```
+
+## es6的引入进行别名设置
+
+```js
+import * as 别名 from '@/路径';
+```
+
+*代表所有，可以使用{变量名}部分引入，as  把什么作为别名
+
+使用时。
+
+```js
+别名.定义的变量或者函数
+```
+
+单个变量设置别名
+
+```js
+import { export as 别名 } from "@/路径";
+```
+
+### 对象的键值不仅仅只是一个字符串
+
+```js
+let user = {
+    name:'wang',
+    age:20
+}
+let key = 'name';
+user[key] //=>  输出wang
+
+//key 可以是一个变量
+let key = prompt("What do you want to know about the user?", "name");
+//prompt  浏览器的输入弹窗  在输入后会返回输入的值给key（默认输入name）
+user[key] //==> John（如果输入 "name"）
+```
+
+我们对于变量的键值应该是灵活的使用
+
+key是一个变量可以通过变量的赋值进而改变对象的输出
+
+### 对象内的计算属性
+
+我们可以在对象字面量中使用方括号。这叫做 **计算属性**。
+
+```js
+let key = prompt("What do you want to know about the user?", "name");
+
+let user = {
+  [key]: "wang", // 属性名是从 key 变量中得到的
+};
+
+alert( user.name ); // 5 如果 key="name"
+```
+
+对象的属性判断是否存在
+
+```
+user.key === undefined  返回true表示不存在
+“key” in user  返回true表示存在
+```
+
